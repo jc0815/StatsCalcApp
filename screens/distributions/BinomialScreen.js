@@ -1,17 +1,37 @@
 import React from 'react';
 import { Platform, StyleSheet, View, TouchableOpacity } from 'react-native';
-import { Container, Header, Content, Card, CardItem, Text, Body, Form, Label, Input, Item } from "native-base";
+import { Container, Header, Content, Card, CardItem, Text, Body, Form, Label, Input, Item, Icon } from "native-base";
 import math from 'mathjs';
 
 
 export default class BinomialScreen extends React.Component {
     constructor() {
         super();
-        this.state = { calculate: false, probability: 0 , trials: 0 , success: 0 };
+        this.state = { 
+            calculate: false,
+            probInputError: false,
+            trialInputError: false,
+            successInputError: false,
+            probability: 0 , 
+            trials: 0 , 
+            success: 0 
+        };
     }
 
     calculatePressed = () => {
-        this.setState({ calculate: true });
+        this.state.calculate = false;
+        this.state.probInputError = false;
+        this.state.trialInputError = false;
+        this.state.successInputError = false;
+        if (this.state.probability < 0 || this.state.probability > 1 || isNaN(this.state.probability)) {
+            this.setState({ probInputError: true})
+        } else if (this.state.trials < 0 || this.state.trials % 1 != 0 || isNaN(this.state.trials)) {
+            this.setState({ probInputError: false, trialInputError: true})
+        } else if (this.state.success < 0 || this.state.success % 1 != 0 || isNaN(this.state.success)) {
+            this.setState({ successInputError: true})
+        } else {
+            this.setState({ calculate: true, probInputError: false, trialInputError: false, successInputError: false});
+        }
     }
 
     calculateBinomial(probability, trial, success) {
@@ -62,27 +82,26 @@ export default class BinomialScreen extends React.Component {
                     <CardItem bordered>
                         <Body>
                             <Text>
-                                Binomial distribution is ....
-                                Lorem ipsum dolor sit amet, legimus prodesset ullamcorper et eam, 
-                                viris ornatus intellegat eu duo. Pro duis quaerendum ea. Sea no esse eligendi incorrupte, e
-                                am at eros velit. Vim an primis appellantur, atqui epicuri an eos. 
-                                No sea amet elitr. Nec suas menandri voluptaria cu.
+                                The binomial distribution is the discrete probability of successes out ot independent Bernoulli trials.
                             </Text>
                         </Body>
                     </CardItem>
                     <CardItem bordered>
                         <Body>
-                            <Item floatingLabel style={{marginTop: 10}}>
+                            <Item floatingLabel error={this.state.probInputError} style={{marginTop: 10}}>
                                 <Label>Probability of success on one trial</Label>
                                 <Input keyboardType={Platform.OS === "ios"? "numeric":"decimal-pad"} onChangeText={(probability) => this.setState({probability})}/>
+                                {this.state.probInputError? <Icon name='close-circle' /> : null }
                             </Item>
-                            <Item floatingLabel style={{marginTop: 10}}>
+                            <Item floatingLabel error={this.state.trialInputError} style={{marginTop: 10}}>
                                 <Label>Number of trials</Label>
                                 <Input keyboardType={Platform.OS === "ios"? "numeric":"decimal-pad"} keyboardType="decimal-pad" onChangeText={(trials) => this.setState({trials})}/>
+                                {this.state.trialInputError? <Icon name='close-circle' /> : null }
                             </Item>
-                            <Item floatingLabel style={{marginTop: 10}}>
+                            <Item floatingLabel error={this.state.successInputError} style={{marginTop: 10}}>
                                 <Label>Number of successes</Label>
                                 <Input keyboardType={Platform.OS === "ios"? "numeric":"decimal-pad"} keyboardType="decimal-pad" onChangeText={(success) => this.setState({success})}/>
+                                {this.state.successInputError? <Icon name='close-circle' /> : null }
                             </Item>
                         </Body>
                     </CardItem>
@@ -94,7 +113,7 @@ export default class BinomialScreen extends React.Component {
                                 <Text>{lessThan} {this.calculateBinomialLess(this.state.probability, this.state.trials, this.state.success)}</Text>
                                 <Text>{lessThanEqual} {this.calculateBinomialLess(this.state.probability, this.state.trials, this.state.success) + this.calculateBinomial(this.state.probability, this.state.trials, this.state.success)}</Text>
                                 <Text>{greaterThan} {this.calculateBinomialGreater(this.state.probability, this.state.trials, this.state.success)}</Text>
-                                <Text>{greaterThanEqual} {this.calculateBinomialGreater(this.state.probability, this.state.trials, this.state.success)+ this.calculateBinomial(this.state.probability, this.state.trials, this.state.success)}</Text>
+                                <Text>{greaterThanEqual} {this.calculateBinomialGreater(this.state.probability, this.state.trials, this.state.success) + this.calculateBinomial(this.state.probability, this.state.trials, this.state.success)}</Text>
                             </Body>
                         </CardItem>
                     :null}
