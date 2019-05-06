@@ -27,41 +27,49 @@ export default class BinomialScreen extends React.Component {
             this.setState({ probInputError: true})
         } else if (this.state.trials < 0 || this.state.trials % 1 != 0 || isNaN(this.state.trials)) {
             this.setState({ probInputError: false, trialInputError: true})
-        } else if (this.state.success < 0 || this.state.success % 1 != 0 || isNaN(this.state.success)) {
-            this.setState({ successInputError: true})
+        } else if (this.state.success < 0 || this.state.success % 1 != 0 || isNaN(this.state.success) || parseInt(this.state.success) > parseInt(this.state.trials)) {
+            this.setState({ probInputError: false, trialInputError: false, successInputError: true})
         } else {
             this.setState({ calculate: true, probInputError: false, trialInputError: false, successInputError: false});
         }
     }
 
     calculateBinomial(probability, trial, success) {
-        var p = parseFloat(probability);
-        var t = parseInt(trial);
-        var s = parseInt(success);
-        return math.combinations(t, s) 
-            * math.pow(p, s)
-            * math.pow((1 - p), (t-s));
+        if (this.state.success < this.state.trials && this.state.calculate) {
+            var p = parseFloat(probability);
+            var t = parseInt(trial);
+            var s = parseInt(success);
+            if (this.state.calculate) {
+                return math.combinations(t, s)
+                    * math.pow(p, s)
+                    * math.pow((1 - p), (t - s));
+            }
+        }
     } 
 
     calculateBinomialGreater(probability, trial, success) {
-        var p = parseFloat(probability);
-        var t = parseInt(trial);
-        var s = parseInt(success);
-        var finalValue = 0;
-        for (i = s + 1; i < t; i++) {
-            finalValue += this.calculateBinomial(p, t, i);
+        if (this.state.success < this.state.trials && this.state.calculate) {
+            var p = parseFloat(probability);
+            var t = parseInt(trial);
+            var s = parseInt(success);
+            var finalValue = 0;
+            for (i = s + 1; i < t; i++) {
+                finalValue += this.calculateBinomial(p, t, i);
+            }
+            return finalValue;
         }
-        return finalValue;
     }
     calculateBinomialLess(probability, trial, success) {
-        var p = parseFloat(probability);
-        var t = parseInt(trial);
-        var s = parseInt(success);
-        var finalValue = 0;
-        for (i = s - 1; i >= 0; i--) {
-            finalValue += this.calculateBinomial(p, t, i);
+        if (this.state.success < this.state.trials && this.state.calculate) {
+            var p = parseFloat(probability);
+            var t = parseInt(trial);
+            var s = parseInt(success);
+            var finalValue = 0;
+            for (i = s - 1; i >= 0; i--) {
+                finalValue += this.calculateBinomial(p, t, i);
+            }
+            return finalValue;
         }
-        return finalValue;
     }
 
 
