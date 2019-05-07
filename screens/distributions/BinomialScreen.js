@@ -23,11 +23,11 @@ export default class BinomialScreen extends React.Component {
         this.state.probInputError = false;
         this.state.trialInputError = false;
         this.state.successInputError = false;
-        if (this.state.probability < 0 || this.state.probability > 1 || isNaN(this.state.probability)) {
+        if (this.state.probability < 0 || this.state.probability > 1 || isNaN(this.state.probability || this.state.probability == "")) {
             this.setState({ probInputError: true})
-        } else if (this.state.trials < 0 || this.state.trials % 1 != 0 || isNaN(this.state.trials)) {
+        } else if (this.state.trials < 0 || this.state.trials % 1 != 0 || isNaN(this.state.trials || this.state.trials == "")) {
             this.setState({ probInputError: false, trialInputError: true})
-        } else if (this.state.success < 0 || this.state.success % 1 != 0 || isNaN(this.state.success) || parseInt(this.state.success) > parseInt(this.state.trials)) {
+        } else if (this.state.success < 0 || this.state.success % 1 != 0 || isNaN(this.state.success) || this.state.success == "" || parseInt(this.state.success) > parseInt(this.state.trials)) {
             this.setState({ probInputError: false, trialInputError: false, successInputError: true})
         } else {
             this.setState({ calculate: true, probInputError: false, trialInputError: false, successInputError: false});

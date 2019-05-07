@@ -20,12 +20,30 @@ export default class PoissonScreen extends React.Component {
         this.state.calculate = false;
         this.state.variableInputError = false;
         this.state.rateInputError = false;
-        if (this.state.variable < 0 || this.state.variable % 1 != 0  || isNaN(this.state.variable)) {
+        if (this.state.variable < 0 || this.state.variable % 1 != 0 || this.state.variable == "" || isNaN(this.state.variable)) {
             this.setState({ variableInputError: true})
-        } else if (this.state.rate < 0 || isNaN(this.state.trials)) {
+        } else if (this.state.rate < 0 || this.state.rate == "" || isNaN(this.state.rate)) {
             this.setState({ variableInputError: false, rateInputError: true})
         } else {
             this.setState({ calculate: true, variableInputError: false, rateInputError: false});
+        }
+    }
+
+    calculatePoisson(variable, rate){
+        var v = parseInt(variable);
+        var r = parseFloat(rate);
+        return math.pow(r , v) * math.pow(math.exp(1), -r ) / math.factorial(v);
+    }
+
+    calculatePoissonGreater(variable, rate) {
+        if (variable > 1) {
+            var v = parseInt(variable);
+            var r = parseFloat(rate);
+            var finalValue = 0;
+            for (i = v-1; i >= 0; i--) {
+                finalValue += this.calculatePoisson(i, r);
+            }
+            return finalValue;
         }
     }
 
@@ -68,11 +86,11 @@ export default class PoissonScreen extends React.Component {
                     {this.state.calculate?
                         <CardItem bordered>
                             <Body>
-                                <Text>{equal} {this.calculateBinomial(this.state.probability, this.state.trials, this.state.success)}</Text>
-                                <Text>{lessThan} {this.calculateBinomialLess(this.state.probability, this.state.trials, this.state.success)}</Text>
-                                <Text>{lessThanEqual} {this.calculateBinomialLess(this.state.probability, this.state.trials, this.state.success) + this.calculateBinomial(this.state.probability, this.state.trials, this.state.success)}</Text>
-                                <Text>{greaterThan} {this.calculateBinomialGreater(this.state.probability, this.state.trials, this.state.success)}</Text>
-                                <Text>{greaterThanEqual} {this.calculateBinomialGreater(this.state.probability, this.state.trials, this.state.success) + this.calculateBinomial(this.state.probability, this.state.trials, this.state.success)}</Text>
+                                <Text>{equal} {this.calculatePoisson(this.state.variable, this.state.rate)}</Text>
+                                <Text>{lessThan} {this.calculatePoissonGreater(this.state.variable, this.state.rate)}</Text>
+                                <Text>{lessThanEqual} {this.calculatePoisson(this.state.variable, this.state.rate) + this.calculatePoissonGreater(this.state.variable, this.state.rate)}</Text>
+                                <Text>{greaterThan} {1 - this.calculatePoisson(this.state.variable, this.state.rate) - this.calculatePoissonGreater(this.state.variable, this.state.rate)}</Text>
+                                <Text>{greaterThanEqual} {1 - this.calculatePoissonGreater(this.state.variable, this.state.rate)}</Text>
                             </Body>
                         </CardItem>
                     :null}
