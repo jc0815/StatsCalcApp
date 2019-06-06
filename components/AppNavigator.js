@@ -8,12 +8,12 @@ const AppNavigator = createStackNavigator({
   BinomialScreen: { screen: BinomialScreen },
   PoissonScreen: { screen: PoissonScreen }
 },
-{
-    headerMode: 'none',
-    navigationOptions: {
-      headerVisible: false,
-    }
-   }
+// {
+//     headerMode: 'none',
+//     navigationOptions: {
+//       headerVisible: false,
+//     }
+//    }
 );
 
 const App = createAppContainer(AppNavigator);

@@ -55,7 +55,7 @@ export default class PoissonScreen extends React.Component {
       var greaterThanEqual = "P(X >= x): ";
     return (
         <Container>
-            <Header />
+            {/* <Header /> */}
             <Content padder>
                 <Card>
                     <CardItem header bordered>

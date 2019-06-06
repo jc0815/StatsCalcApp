@@ -1,12 +1,15 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Container, Header, Content, List, ListItem, Text, Separator } from 'native-base';
+import { Container, Header, Content, List, ListItem, Text, Separator, FooterTab, Icon, Button, Footer} from 'native-base';
 
 export default class DistributionScreen extends React.Component {
+    // static navigationOptions = {
+    //     title: 'Statistics Calculator',
+    //   };
   render() {
     return (
         <Container>
-            <Header />
+            {/* <Header /> */}
             <Content>
                 <Separator bordered>
                     <Text>Continuous Distributions</Text>
@@ -43,6 +46,22 @@ export default class DistributionScreen extends React.Component {
                     <Text>Geometric</Text>
                 </ListItem>
             </Content>
+            <Footer>
+                <FooterTab >
+                    <Button vertical active>
+                        <Icon name="ios-stats" />
+                        <Text>Distributions</Text>
+                    </Button>
+                    <Button vertical>
+                        <Icon name="calculator" />
+                        <Text>Tools</Text>
+                    </Button>
+                    <Button vertical>
+                        <Icon name="settings" />
+                        <Text>Settings</Text>
+                    </Button>
+                </FooterTab>
+            </Footer>
         </Container>
     );
   }

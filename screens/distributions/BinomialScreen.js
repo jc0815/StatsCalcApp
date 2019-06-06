@@ -81,7 +81,7 @@ export default class BinomialScreen extends React.Component {
       var greaterThanEqual = "P(X >= x): ";
     return (
         <Container>
-            <Header />
+            {/* <Header /> */}
             <Content padder>
                 <Card>
                     <CardItem header bordered>
