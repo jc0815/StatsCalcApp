@@ -3,9 +3,15 @@ import { StyleSheet, View } from 'react-native';
 import { Container, Header, Content, List, ListItem, Text, Separator, FooterTab, Icon, Button, Footer} from 'native-base';
 
 export default class DistributionScreen extends React.Component {
-    // static navigationOptions = {
-    //     title: 'Statistics Calculator',
-    //   };
+    static navigationOptions = {
+        title: 'Distributions',
+        headerLeft: null,
+        transitionConfig: () => ({
+            transitionSpec: {
+              duration: 0, 
+            },
+          }),
+      };
   render() {
     return (
         <Container>
@@ -52,7 +58,7 @@ export default class DistributionScreen extends React.Component {
                         <Icon name="ios-stats" />
                         <Text>Distributions</Text>
                     </Button>
-                    <Button vertical>
+                    <Button vertical onPress={() => this.props.navigation.navigate('ToolsScreenNoTransition')}>
                         <Icon name="calculator" />
                         <Text>Tools</Text>
                     </Button>
