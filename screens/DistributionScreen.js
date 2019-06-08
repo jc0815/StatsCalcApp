@@ -3,8 +3,15 @@ import { StyleSheet, View } from 'react-native';
 import { Container, Header, Content, List, ListItem, Text, Separator, FooterTab, Icon, Button, Footer} from 'native-base';
 
 export default class DistributionScreen extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            distributionTapped: true,
+        }
+    }
     static navigationOptions = {
-        title: 'Distributions',
+        // title: this.state.distributionTapped ? 'Distributions' : 'Tools',
+        title: 'Statistics Calculator',
         headerLeft: null,
         transitionConfig: () => ({
             transitionSpec: {
@@ -16,6 +23,8 @@ export default class DistributionScreen extends React.Component {
     return (
         <Container>
             {/* <Header /> */}
+            {this.state.distributionTapped ? 
+            
             <Content>
                 <Separator bordered>
                     <Text>Continuous Distributions</Text>
@@ -52,20 +61,53 @@ export default class DistributionScreen extends React.Component {
                     <Text>Geometric</Text>
                 </ListItem>
             </Content>
+            :
+            <Content>
+            <Separator bordered>
+                <Text>Basic</Text>
+            </Separator>
+            <ListItem>
+                <Text>Mean</Text>
+            </ListItem>
+            <ListItem>
+                <Text>Standard deviation</Text>
+            </ListItem>
+            <ListItem last>
+                <Text>Random Number Generator</Text>
+            </ListItem>
+
+            <Separator bordered>
+                <Text>Statistics Tools</Text>
+            </Separator>
+            <ListItem onPress={() => this.props.navigation.navigate('BinomialScreen')}>
+                <Text>Bayes'</Text>
+            </ListItem>
+            <ListItem>
+                <Text>Factorial</Text>
+            </ListItem>
+            <ListItem>
+                <Text>Combinations</Text>
+            </ListItem>
+            <ListItem onPress={() => this.props.navigation.navigate('PoissonScreen')} last>
+                <Text>Permutations</Text>
+            </ListItem>
+        </Content>
+            }
             <Footer>
                 <FooterTab >
-                    <Button vertical active>
+                    <Button vertical active={this.state.distributionTapped} onPress={() => this.setState({distributionTapped: true})}>
                         <Icon name="ios-stats" />
                         <Text>Distributions</Text>
                     </Button>
-                    <Button vertical onPress={() => this.props.navigation.navigate('ToolsScreenNoTransition')}>
+                    <Button vertical active={!this.state.distributionTapped} onPress={() => this.setState({distributionTapped: false})}> 
+                    {/* onPress={() => this.props.navigation.navigate('ToolsScreenNoTransition')} */}
                         <Icon name="calculator" />
                         <Text>Tools</Text>
                     </Button>
-                    <Button vertical>
+                    {/* <Button vertical>
                         <Icon name="settings" />
                         <Text>Settings</Text>
-                    </Button>
+                    </Button> */}
                 </FooterTab>
             </Footer>
         </Container>

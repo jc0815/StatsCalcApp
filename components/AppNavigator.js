@@ -6,19 +6,21 @@ import PoissonScreen from '../screens/distributions/PoissonScreen';
 import ToolsScreen from '../screens/tools/ToolsScreen';
 
 const AppNavigator = createStackNavigator({
-  DistributionScreenNoTransition: { screen: DistributionScreen},
+  DistributionScreen: { screen: DistributionScreen},
   BinomialScreen: { screen: BinomialScreen },
   PoissonScreen: { screen: PoissonScreen },
 
 
-  ToolsScreenNoTransition: { screen: ToolsScreen},
-}, {
-  transitionConfig: (sceneProps) => ({
-    transitionSpec: {
-      duration: sceneProps.scene.route.routeName.endsWith('NoTransition') ? 0 : 260, 
-    },
-  }),
-});
+  // ToolsScreenNoTransition: { screen: ToolsScreen},
+}, 
+// {
+//   transitionConfig: (sceneProps) => ({
+//     transitionSpec: {
+//       duration: sceneProps.scene.route.routeName.endsWith('NoTransition') ? 0 : 260, 
+//     },
+//   }),
+// }
+);
 
 
 

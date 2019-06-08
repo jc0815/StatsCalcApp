@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Container, Header, Content, List, ListItem, Text, Separator, FooterTab, Icon, Button, Footer} from 'native-base';
 
-
+// this class is deprecated ....
 export default class ToolsScreen extends React.Component {
     static navigationOptions = {
         title: 'Tools',
