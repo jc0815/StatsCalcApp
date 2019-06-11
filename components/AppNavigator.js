@@ -2,13 +2,15 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 import DistributionScreen from '../screens/DistributionScreen';
 import BinomialScreen from '../screens/distributions/BinomialScreen';
 import PoissonScreen from '../screens/distributions/PoissonScreen';
+import GeometricScreen from '../screens/distributions/GeometricScreen';
 
-import ToolsScreen from '../screens/tools/ToolsScreen';
+// import ToolsScreen from '../screens/tools/ToolsScreen';
 
 const AppNavigator = createStackNavigator({
   DistributionScreen: { screen: DistributionScreen},
   BinomialScreen: { screen: BinomialScreen },
   PoissonScreen: { screen: PoissonScreen },
+  GeometricScreen: { screen: GeometricScreen },
 
 
   // ToolsScreenNoTransition: { screen: ToolsScreen},

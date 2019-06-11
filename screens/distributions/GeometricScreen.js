@@ -4,17 +4,15 @@ import { Container, Header, Content, Card, CardItem, Text, Body, Form, Label, In
 import math from 'mathjs';
 
 
-export default class BinomialScreen extends React.Component {
+export default class GeometricScreen extends React.Component {
     constructor() {
         super();
         this.state = { 
             calculate: false,
             probInputError: false,
             trialInputError: false,
-            successInputError: false,
             probability: 0 , 
             trials: 0 , 
-            success: 0 
         };
     }
 
@@ -27,47 +25,37 @@ export default class BinomialScreen extends React.Component {
             this.setState({ probInputError: true})
         } else if (this.state.trials < 0 || this.state.trials % 1 != 0 || isNaN(this.state.trials || this.state.trials == "")) {
             this.setState({ probInputError: false, trialInputError: true})
-        } else if (this.state.success < 0 || this.state.success % 1 != 0 || isNaN(this.state.success) || this.state.success == "" || parseInt(this.state.success) > parseInt(this.state.trials)) {
-            this.setState({ probInputError: false, trialInputError: false, successInputError: true})
         } else {
             this.setState({ calculate: true, probInputError: false, trialInputError: false, successInputError: false});
         }
     }
 
-    calculateBinomial(probability, trial, success) {
-        if (this.state.success < this.state.trials && this.state.calculate) {
+    calculateGeometric(probability, trial) {
+        if (this.state.calculate) {
             var p = parseFloat(probability);
             var t = parseInt(trial);
-            var s = parseInt(success);
             if (this.state.calculate) {
-                return math.combinations(t, s)
-                    * math.pow(p, s)
-                    * math.pow((1 - p), (t - s));
+                return math.pow((1-p), (t-1)) * p;
             }
         }
     } 
 
-    calculateBinomialGreater(probability, trial, success) {
-        if (this.state.success < this.state.trials && this.state.calculate) {
+    calculateGeometricGreater(probability, trial) {
+        if (this.state.calculate) {
             var p = parseFloat(probability);
             var t = parseInt(trial);
-            var s = parseInt(success);
-            var finalValue = 0;
-            for (i = s + 1; i < t; i++) {
-                finalValue += this.calculateBinomial(p, t, i);
-            }
-            return finalValue;
+            return 1 - (this.calculateGeometricLess(p,t) + this.calculateGeometric(p,t));
         }
     }
-    calculateBinomialLess(probability, trial, success) {
-        if (this.state.success < this.state.trials && this.state.calculate) {
+    calculateGeometricLess(probability, trial) {
+        if (this.state.calculate) {
             var p = parseFloat(probability);
             var t = parseInt(trial);
-            var s = parseInt(success);
             var finalValue = 0;
-            for (i = s - 1; i >= 0; i--) {
-                finalValue += this.calculateBinomial(p, t, i);
+            for (i = 1; i < t; i++) {
+                finalValue += this.calculateGeometric(p, i);
             }
+
             return finalValue;
         }
     }
@@ -85,13 +73,13 @@ export default class BinomialScreen extends React.Component {
             <Content padder>
                 <Card>
                     <CardItem header bordered style={{flexDirection: 'column'}}>
-                        <Text style={{color: 'blue'}}>Binomial Distribution</Text>
-                        <Text style={{color: 'black'}}>X ~ Bin(n,p)</Text>
+                        <Text style={{color: 'blue'}}>Geometric Distribution</Text>
+                        <Text style={{color: 'black'}}>X ~ Geom(p)</Text>
                     </CardItem>
                     <CardItem bordered>
                         <Body>
                             <Text>
-                                The binomial distribution is the discrete probability of successes out of independent Bernoulli trials.
+                                The geometric distribution is the discrete probability of the first success on the X number of trials.
                             </Text>
                         </Body>
                     </CardItem>
@@ -107,22 +95,17 @@ export default class BinomialScreen extends React.Component {
                                 <Input keyboardType={Platform.OS === "ios"? "numeric":"decimal-pad"} keyboardType="decimal-pad" onChangeText={(trials) => this.setState({trials})}/>
                                 {this.state.trialInputError? <Icon name='close-circle' /> : null }
                             </Item>
-                            <Item floatingLabel error={this.state.successInputError} style={{marginTop: 10}}>
-                                <Label>Number of successes</Label>
-                                <Input keyboardType={Platform.OS === "ios"? "numeric":"decimal-pad"} keyboardType="decimal-pad" onChangeText={(success) => this.setState({success})}/>
-                                {this.state.successInputError? <Icon name='close-circle' /> : null }
-                            </Item>
                         </Body>
                     </CardItem>
 
                     {this.state.calculate?
                         <CardItem bordered>
                             <Body>
-                                <Text>{equal} {this.calculateBinomial(this.state.probability, this.state.trials, this.state.success)}</Text>
-                                <Text>{lessThan} {this.calculateBinomialLess(this.state.probability, this.state.trials, this.state.success)}</Text>
-                                <Text>{lessThanEqual} {this.calculateBinomialLess(this.state.probability, this.state.trials, this.state.success) + this.calculateBinomial(this.state.probability, this.state.trials, this.state.success)}</Text>
-                                <Text>{greaterThan} {this.calculateBinomialGreater(this.state.probability, this.state.trials, this.state.success)}</Text>
-                                <Text>{greaterThanEqual} {this.calculateBinomialGreater(this.state.probability, this.state.trials, this.state.success) + this.calculateBinomial(this.state.probability, this.state.trials, this.state.success)}</Text>
+                                <Text>{equal} {this.calculateGeometric(this.state.probability, this.state.trials)}</Text>
+                                <Text>{lessThan} {this.calculateGeometricLess(this.state.probability, this.state.trials)}</Text>
+                                <Text>{lessThanEqual} {this.calculateGeometricLess(this.state.probability, this.state.trials) + this.calculateGeometric(this.state.probability, this.state.trials)}</Text>
+                                <Text>{greaterThan} {this.calculateGeometricGreater(this.state.probability, this.state.trials)}</Text>
+                                <Text>{greaterThanEqual} {this.calculateGeometricGreater(this.state.probability, this.state.trials) + this.calculateGeometric(this.state.probability, this.state.trials)}</Text>
                             </Body>
                         </CardItem>
                     :null}

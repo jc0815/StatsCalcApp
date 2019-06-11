@@ -58,8 +58,9 @@ export default class PoissonScreen extends React.Component {
             {/* <Header /> */}
             <Content padder>
                 <Card>
-                    <CardItem header bordered>
+                    <CardItem header bordered style={{flexDirection: 'column'}}>
                         <Text style={{color: 'blue'}}>Poisson Distribution</Text>
+                        <Text style={{color: 'black'}}>X ~ Poisson(t)</Text>
                     </CardItem>
                     <CardItem bordered>
                         <Body>

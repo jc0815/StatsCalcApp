@@ -57,7 +57,7 @@ export default class DistributionScreen extends React.Component {
                 <ListItem onPress={() => this.props.navigation.navigate('PoissonScreen')}>
                     <Text>Poisson</Text>
                 </ListItem>
-                <ListItem last>
+                <ListItem onPress={() => this.props.navigation.navigate('GeometricScreen')} last>
                     <Text>Geometric</Text>
                 </ListItem>
             </Content>
