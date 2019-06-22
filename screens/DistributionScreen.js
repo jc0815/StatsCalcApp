@@ -48,12 +48,17 @@ export default class DistributionScreen extends React.Component {
                 <ListItem onPress={() => this.props.navigation.navigate('BinomialScreen')}>
                     <Text>Binomial</Text>
                 </ListItem>
-                <ListItem>
+                <ListItem onPress={() => this.props.navigation.navigate('NegativeBinomialScreen')}>
                     <Text>Negative Binomial</Text>
                 </ListItem>
-                <ListItem>
+
+                {/* ------------------------------
+                    TODO: 
+                    ------------------------------*/}
+                {/* <ListItem onPress={() => this.props.navigation.navigate('HyperGeometricScreen')}>
                     <Text>Hypergeometric</Text>
-                </ListItem>
+                </ListItem> */}
+
                 <ListItem onPress={() => this.props.navigation.navigate('PoissonScreen')}>
                     <Text>Poisson</Text>
                 </ListItem>
@@ -63,35 +68,35 @@ export default class DistributionScreen extends React.Component {
             </Content>
             :
             <Content>
-            <Separator bordered>
-                <Text>Basic</Text>
-            </Separator>
-            <ListItem>
-                <Text>Mean</Text>
-            </ListItem>
-            <ListItem>
-                <Text>Standard deviation</Text>
-            </ListItem>
-            <ListItem last>
-                <Text>Random Number Generator</Text>
-            </ListItem>
+                <Separator bordered>
+                    <Text>Basic</Text>
+                </Separator>
+                <ListItem>
+                    <Text>Mean</Text>
+                </ListItem>
+                <ListItem>
+                    <Text>Standard deviation</Text>
+                </ListItem>
+                <ListItem last>
+                    <Text>Random Number Generator</Text>
+                </ListItem>
 
-            <Separator bordered>
-                <Text>Statistics Tools</Text>
-            </Separator>
-            <ListItem onPress={() => this.props.navigation.navigate('BinomialScreen')}>
-                <Text>Bayes'</Text>
-            </ListItem>
-            <ListItem>
-                <Text>Factorial</Text>
-            </ListItem>
-            <ListItem>
-                <Text>Combinations</Text>
-            </ListItem>
-            <ListItem onPress={() => this.props.navigation.navigate('PoissonScreen')} last>
-                <Text>Permutations</Text>
-            </ListItem>
-        </Content>
+                <Separator bordered>
+                    <Text>Statistics Tools</Text>
+                </Separator>
+                <ListItem onPress={() => this.props.navigation.navigate('BinomialScreen')}>
+                    <Text>Bayes'</Text>
+                </ListItem>
+                <ListItem>
+                    <Text>Factorial</Text>
+                </ListItem>
+                <ListItem>
+                    <Text>Combinations</Text>
+                </ListItem>
+                <ListItem onPress={() => this.props.navigation.navigate('PoissonScreen')} last>
+                    <Text>Permutations</Text>
+                </ListItem>
+            </Content>
             }
             <Footer>
                 <FooterTab >
