@@ -1,9 +1,9 @@
 {
   "expoServerPort": null,
   "webpackServerPort": null,
-  "expoServerNgrokUrl": "https://uf-xiu.jc0815.statscalc.exp.direct",
-  "packagerNgrokUrl": "https://packager.uf-xiu.jc0815.statscalc.exp.direct",
-  "ngrokPid": 19583,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "devToolsPort": 19002,
   "packagerPort": null,
   "packagerPid": null
